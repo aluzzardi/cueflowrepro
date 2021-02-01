@@ -43,7 +43,7 @@ func loadCue(p string) (*cue.Instance, error) {
 
 	binsts := load.Instances([]string{p}, cfg)
 	instances := cue.Build(binsts)
-	root := cue.Merge(instances...)
+	root := instances[0]
 	if root.Err != nil {
 		return nil, root.Err
 	}
@@ -82,7 +82,7 @@ func run(ctx context.Context, root *cue.Instance) (*cue.Instance, error) {
 			}
 
 			return t.Fill(map[string]string{
-				"output": fmt.Sprintf("from %s: %s", t.Path().String(), output),
+				"output": output,
 			})
 		}), nil
 	}
